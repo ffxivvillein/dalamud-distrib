@@ -1,0 +1,15 @@
+name: Clear cache
+on:
+  push:
+  workflow_dispatch:
+concurrency: regenerate
+
+jobs:
+  generate:
+    name: Regenerate PluginMaster
+    runs-on: windows-latest
+    steps:
+      - name: Clear Web Services cache
+        run: curl -X POST --fail https://xlweb.xivpf.xyz/Dalamud/Release/ClearCache?key=$env:CACHE_CLEAR_KEY
+        env:
+          CACHE_CLEAR_KEY: ${{ secrets.CACHE_CLEAR_KEY }}
